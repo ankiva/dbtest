@@ -1,6 +1,7 @@
 package org.kiva.dbtest;
 
 import org.kiva.dbtest.dao.UserDAO;
+import org.kiva.dbtest.dao.impl.CassandraUserDaoImpl;
 
 public class Environment {
 
@@ -21,7 +22,8 @@ public class Environment {
 	}
 
 	private void initCassandra() {
-
+		userDAO = new CassandraUserDaoImpl();
+		userDAO.init();
 	}
 
 	private void initMongoDb() {
