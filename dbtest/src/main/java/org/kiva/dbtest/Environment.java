@@ -28,7 +28,8 @@ public class Environment {
 	}
 
 	private void initMongoDb() {
-		
+		userDAO = new MongoUserDAO();
+		userDAO.init();
 	}
 
 	private void initRedis() {
