@@ -6,6 +6,18 @@ import org.kiva.dbtest.model.User;
 public class RedisUserDAO implements UserDAO {
 
 	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public User create(User user) {
 		// TODO Auto-generated method stub
 		return null;

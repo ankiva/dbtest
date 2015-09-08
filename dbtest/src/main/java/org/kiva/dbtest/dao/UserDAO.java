@@ -4,6 +4,10 @@ import org.kiva.dbtest.model.User;
 
 public interface UserDAO {
 
+	void init();
+	
+	void destroy();
+	
 	User create(User user);
 	
 	User read(String userName);
