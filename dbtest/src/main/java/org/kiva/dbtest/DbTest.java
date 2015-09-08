@@ -6,52 +6,59 @@ import org.kiva.dbtest.dao.UserDAO;
 import org.kiva.dbtest.model.User;
 
 public class DbTest {
-	
+
 	private static Environment env;
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		DbType dbType = DbType.parse(args[0]);
 		env = new Environment();
 		env.init(dbType);
-		
+
 		test1();
+
 	}
-	
-	private static void test1(){
+
+	private static void test1() {
 		String username = "babulja";
-		
+
 		UserDAO userDAO = env.getUserDAO();
+
 		userDAO.init();
-		
-		User user = createUser(username);
-		
-		userDAO.create(user);
-		
-		assert user != null : "created";
-		
-		User user1 = userDAO.read(username);
-		
-		assert user1 != null : "read";
-		assert user1.equals(user);
-		
-		modify(user1);
-		
-		userDAO.update(user1);
-		
-		assert !user.equals(user1);
-		
-		User user2 = userDAO.read(username);
-		
-		assert user1.equals(user2) : "modified";
-		
-		userDAO.delete(user2);
-		
-		User user3 = userDAO.read(username);
-		
-		assert user3 == null;
+		try {
+
+			User user = createUser(username);
+
+			userDAO.create(user);
+
+			assert user != null : "created";
+
+			User user1 = userDAO.read(username);
+
+			assert user1 != null : "read";
+			assert user1.equals(user);
+
+			modify(user1);
+
+			userDAO.update(user1);
+
+			assert !user.equals(user1);
+
+			User user2 = userDAO.read(username);
+
+			assert user1.equals(user2) : "modified";
+
+			userDAO.delete(user2);
+
+			User user3 = userDAO.read(username);
+
+			assert user3 == null;
+
+		} finally {
+			userDAO.destroy();
+		}
 	}
-	
-	private static User createUser(String username){
+
+	private static User createUser(String username) {
 		User user = new User();
 		user.setUserName(username);
 		user.setFirstName("Aus");
@@ -63,8 +70,8 @@ public class DbTest {
 		user.setSmart(true);
 		return user;
 	}
-	
-	private static void modify(User user){
+
+	private static void modify(User user) {
 		user.setFirstName("kapp");
 		user.setLastName("volodja");
 		user.setBirthDate(new Date());
