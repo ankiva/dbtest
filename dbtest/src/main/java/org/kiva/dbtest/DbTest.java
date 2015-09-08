@@ -2,14 +2,19 @@ package org.kiva.dbtest;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.kiva.dbtest.dao.UserDAO;
 import org.kiva.dbtest.model.User;
 
 public class DbTest {
+	
+	private static final Logger LOG = Logger.getLogger(DbTest.class);
 
 	private static Environment env;
 
 	public static void main(String[] args) {
+		Utils.confLogger();
+		LOG.info("start");
 		DbType dbType = DbType.parse(args[0]);
 		env = new Environment();
 		env.init(dbType);
@@ -29,10 +34,14 @@ public class DbTest {
 			User user = createUser(username);
 
 			userDAO.create(user);
+			
+			LOG.info("created: " + user);
 
 			assert user != null : "created";
 
 			User user1 = userDAO.read(username);
+			
+			LOG.info("read created: " + user1);
 
 			assert user1 != null : "read";
 			assert user1.equals(user);
@@ -40,10 +49,14 @@ public class DbTest {
 			modify(user1);
 
 			userDAO.update(user1);
+			
+			LOG.info("updated: " + user1);
 
 			assert !user.equals(user1);
 
 			User user2 = userDAO.read(username);
+			
+			LOG.info("read updated: " + user);
 
 			assert user1.equals(user2) : "modified";
 
@@ -51,6 +64,8 @@ public class DbTest {
 
 			User user3 = userDAO.read(username);
 
+			LOG.info("deleted: " + user3);
+			
 			assert user3 == null;
 
 		} finally {
