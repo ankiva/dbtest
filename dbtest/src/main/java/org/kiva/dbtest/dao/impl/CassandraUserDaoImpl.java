@@ -71,4 +71,10 @@ public class CassandraUserDaoImpl implements UserDAO {
 		cluster.close();
 	}
 
+	@Override
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

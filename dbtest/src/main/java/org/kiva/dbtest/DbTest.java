@@ -67,7 +67,7 @@ public class DbTest {
 			LOG.info("deleted: " + user3);
 			
 			assert user3 == null;
-
+			
 		} finally {
 			userDAO.destroy();
 		}

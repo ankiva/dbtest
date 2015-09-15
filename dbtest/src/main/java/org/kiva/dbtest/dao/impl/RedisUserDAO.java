@@ -41,4 +41,10 @@ public class RedisUserDAO implements UserDAO {
 		
 	}
 
+	@Override
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
