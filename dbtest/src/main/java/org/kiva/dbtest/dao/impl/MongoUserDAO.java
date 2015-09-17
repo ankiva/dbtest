@@ -17,11 +17,11 @@ public class MongoUserDAO implements UserDAO{
 	private MongoDatabase db;
 	private MongoCollection<Document> collection;
 	private final String dbName = "MongoDB";
-	private final String collectionName = "MongoCollection";
+	private final String collectionName = "User";
 	
 	@Override
 	public User create(User user) {
-		Document doc = collection.find(new BasicDBObject("userName", user.getUserName())).first();
+		Document doc = collection.find(new BasicDBObject("_id", user.getUserName())).first();
 		
 		if(doc == null)
 		{
@@ -35,7 +35,7 @@ public class MongoUserDAO implements UserDAO{
 
 	@Override
 	public User read(String userName) {
-		Document doc = collection.find(new BasicDBObject("userName", userName)).first();
+		Document doc = collection.find(new BasicDBObject("_id", userName)).first();
 		User u = null;
 		if(doc != null)
 		{
@@ -48,12 +48,12 @@ public class MongoUserDAO implements UserDAO{
 
 	@Override
 	public void update(User user) {
-		Document doc = collection.find(new BasicDBObject("userName", user.getUserName())).first();
+		Document doc = collection.find(new BasicDBObject("_id", user.getUserName())).first();
 		if(doc != null)
 		{
 			Document newDoc = new Document();
 			setDocValues(newDoc, user);
-			//collection.updateOne(new BasicDBObject("userName", user.getUserName()), doc);
+			//collection.updateOne(new BasicDBObject("_id", user.getUserName()), doc);
 			collection.findOneAndReplace(doc, newDoc);
 		}
 		//TODO: throw UserNotFoundException()
@@ -61,7 +61,7 @@ public class MongoUserDAO implements UserDAO{
 
 	@Override
 	public void delete(User user) {
-		collection.deleteOne(new BasicDBObject("userName", user.getUserName()));
+		collection.deleteOne(new BasicDBObject("_id", user.getUserName()));
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class MongoUserDAO implements UserDAO{
 	
 	private void setUserValues(Document doc, User u)
 	{
-		u.setUserName((String) doc.get("userName"));
+		u.setUserName((String) doc.get("_id"));
 		u.setFirstName((String) doc.get("firstName"));
 		u.setLastName((String) doc.get("lastName"));
 		u.setAge((Integer) doc.get("age"));
@@ -95,7 +95,7 @@ public class MongoUserDAO implements UserDAO{
 	
 	private void setDocValues(Document doc, User user)
 	{
-		doc.put("userName", user.getUserName());
+		doc.put("_id", user.getUserName());
 		doc.put("firstName", user.getFirstName());
 		doc.put("lastName", user.getLastName());
 		doc.put("age", user.getAge());
