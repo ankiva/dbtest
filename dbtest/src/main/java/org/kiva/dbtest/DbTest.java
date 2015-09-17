@@ -73,7 +73,7 @@ public class DbTest {
 		}
 	}
 
-	private static User createUser(String username) {
+	public static User createUser(String username) {
 		User user = new User();
 		user.setUserName(username);
 		user.setFirstName("Aus");

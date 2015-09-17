@@ -19,14 +19,14 @@ public class MongoDAOHibernateTest {
 
 	private EntityManager entityManager;
 	private User user;
+	static{
+		Utils.confLogger();
+	}
 	
 	@BeforeClass
 	public void buildUp() {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("mongol");
-		
 		entityManager = entityManagerFactory.createEntityManager();
-		Utils.confLogger();
-		
 		user = createTestUser();
 	}
 	
@@ -51,9 +51,34 @@ public class MongoDAOHibernateTest {
 	public void testCreate()
 	{
 	    entityManager.persist(user);
-	    User doc = entityManager.find( User.class, user.getUserName());
+	    User loadedUser = entityManager.find(User.class, user.getUserName());
 	    
-		Assert.assertNotNull(doc);
+		Assert.assertEquals(user, loadedUser);
+	}
+	
+	@Test(dependsOnMethods = {"testCreate"})
+	public void testRead()
+	{
+	    User loadedUser = entityManager.find(User.class, user.getUserName());
+	    
+		Assert.assertEquals(user, loadedUser);
+	}
+	
+	@Test(dependsOnMethods = {"testRead"})
+	public void testUpdate()
+	{
+		user.setLastName("Changed name");
+	    entityManager.merge(user);
+	    User loadedUser = entityManager.find(User.class, user.getUserName());
+	    
+		Assert.assertEquals(loadedUser.getLastName(), "Changed name");
+	}
+	
+	@Test(dependsOnMethods = {"testUpdate"})
+	public void testDelete()
+	{
+	    entityManager.remove(user);
+		Assert.assertFalse(entityManager.contains(user));
 	}
 	
 	private User createTestUser() {
