@@ -19,6 +19,7 @@ public class DbTest {
 		env = new Environment();
 		env.init(dbType);
 
+//		env.getUserDAO().deleteAll();
 		test1();
 
 	}
@@ -67,6 +68,8 @@ public class DbTest {
 			LOG.info("deleted: " + user3);
 			
 			assert user3 == null;
+			
+			userDAO.deleteAll();
 			
 		} finally {
 			userDAO.destroy();

@@ -110,4 +110,9 @@ public class MongoUserDAO implements UserDAO{
 		collection = coll;
 	}
 
+	@Override
+	public void deleteAll() {
+		collection.drop();
+	}
+
 }

@@ -3,6 +3,7 @@ package org.kiva.dbtest;
 import org.kiva.dbtest.dao.UserDAO;
 import org.kiva.dbtest.dao.impl.MongoUserDAO;
 import org.kiva.dbtest.dao.impl.CassandraUserDaoImpl;
+import org.kiva.dbtest.dao.impl.RedisUserDAO;
 
 public class Environment {
 
@@ -33,7 +34,8 @@ public class Environment {
 	}
 
 	private void initRedis() {
-
+		userDAO = new RedisUserDAO();
+		userDAO.init();
 	}
 
 	public UserDAO getUserDAO() {
