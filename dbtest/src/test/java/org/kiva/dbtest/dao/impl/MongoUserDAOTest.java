@@ -52,20 +52,20 @@ public class MongoUserDAOTest {
 	public void testCreate() {
 		mongoDAO.create(user);
 
-		Document doc = collection.find(new BasicDBObject("userName", "test"))
+		Document doc = collection.find(new BasicDBObject("_id", "test"))
 				.first();
 		Assert.assertNotNull(doc);
 	}
 
 	@Test(dependsOnMethods = { "testCreate" })
 	public void testRead() {
-		User u = mongoDAO.read("test");
+		User u = mongoDAO.read(user.getUserName());
 		Assert.assertNotNull(u);
 	}
 
 	@Test(dependsOnMethods = { "testCreate" })
 	public void testUpdate() {
-		User u = mongoDAO.read("test");
+		User u = mongoDAO.read(user.getUserName());
 		u.setLastName("Foo");
 		mongoDAO.update(u);
 
@@ -76,10 +76,10 @@ public class MongoUserDAOTest {
 
 	@Test(dependsOnMethods = { "testRead" })
 	public void testDelete() {
-		User u = mongoDAO.read("test");
+		User u = mongoDAO.read(user.getUserName());
 		mongoDAO.delete(u);
 
-		u = mongoDAO.read("test");
+		u = mongoDAO.read(user.getUserName());
 		Assert.assertNull(u);
 	}
 

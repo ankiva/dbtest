@@ -2,9 +2,14 @@ package org.kiva.dbtest.model;
 
 import java.util.Date;
 
-public class User {
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+public class User {
+	@Id
 	private String userName;
+	
 	private String firstName;
 	private String lastName;
 	private Integer age;
