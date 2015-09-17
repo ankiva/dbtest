@@ -19,33 +19,13 @@ public class MongoDAOHibernateTest {
 
 	private EntityManager entityManager;
 	private User user;
+
 	static{
 		Utils.confLogger();
 	}
 	
-	@BeforeClass
-	public void buildUp() {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("mongol");
-		entityManager = entityManagerFactory.createEntityManager();
-		user = createTestUser();
-	}
 	
-	@AfterClass
-	public void tearDown() {
-		entityManager.close();
-	}
 	
-	@BeforeMethod
-	public void beforeTest()
-	{
-		entityManager.getTransaction().begin();
-	}
-	
-	@AfterMethod
-	public void afterTest()
-	{
-		entityManager.getTransaction().commit();
-	}
 	
 	@Test
 	public void testCreate()
@@ -79,6 +59,34 @@ public class MongoDAOHibernateTest {
 	{
 	    entityManager.remove(user);
 		Assert.assertFalse(entityManager.contains(user));
+	}
+
+	
+	@BeforeClass
+	public void buildUp() {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("mongol");
+		
+		entityManager = entityManagerFactory.createEntityManager();
+		Utils.confLogger();
+		
+		user = createTestUser();
+	}
+	
+	@AfterClass
+	public void tearDown() {
+		entityManager.close();
+	}
+	
+	@BeforeMethod
+	public void beforeTest()
+	{
+		entityManager.getTransaction().begin();
+	}
+	
+	@AfterMethod
+	public void afterTest()
+	{
+		entityManager.getTransaction().commit();
 	}
 	
 	private User createTestUser() {

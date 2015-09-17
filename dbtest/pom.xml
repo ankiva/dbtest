@@ -37,6 +37,11 @@
   		<artifactId>testng</artifactId>
   		<version>6.9.4</version>
   	</dependency>
+  	<dependency>
+  		<groupId>redis.clients</groupId>
+  		<artifactId>jedis</artifactId>
+  		<version>2.7.3</version>
+  	</dependency>
 	<dependency>
 		<groupId>org.jboss.jbossts</groupId>
 		<artifactId>jbossjta</artifactId>
