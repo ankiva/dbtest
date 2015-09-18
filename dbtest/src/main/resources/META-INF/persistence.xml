@@ -14,4 +14,14 @@
 			<property name="hibernate.ogm.datastore.create_database" value="true" />
 		</properties>
 	</persistence-unit>
+	
+	<persistence-unit name="mongolid_raisk" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+
+		<properties>
+			<property name="hibernate.ogm.datastore.provider" value="mongodb" />
+			<property name="hibernate.ogm.datastore.database" value="MongolidDB" />
+			<property name="hibernate.ogm.datastore.create_database" value="true" />
+		</properties>
+	</persistence-unit>
 </persistence>
