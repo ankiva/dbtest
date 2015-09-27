@@ -11,16 +11,15 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.ogm.cfg.OgmConfiguration;
 import org.hibernate.service.ServiceRegistry;
-import org.kiva.dbtest.DbTest;
 import org.kiva.dbtest.DbType;
 import org.kiva.dbtest.dao.UserDAO;
 import org.kiva.dbtest.model.User;
 
 public class HibernateDAO implements UserDAO {
 
-	private static final Logger LOG = Logger.getLogger(DbTest.class);
 	private SessionFactory sessionFactory;
 	private DbType dbType;
+	private static final Logger LOG = Logger.getLogger(HibernateDAO.class);
 
 	public HibernateDAO(DbType dbType) {
 		this.dbType = dbType;
@@ -60,10 +59,9 @@ public class HibernateDAO implements UserDAO {
 				.applySettings(configuration.getProperties()).build();
 		LOG.info("Hibernate ServiceRegistry created");
 
-		SessionFactory sessFactory = configuration.buildSessionFactory(serviceRegistry);
-
-		sessionFactory = sessFactory;
+		sessionFactory =  configuration.buildSessionFactory(serviceRegistry);
 	}
+
 	
 	public User create(User user)
 	{
