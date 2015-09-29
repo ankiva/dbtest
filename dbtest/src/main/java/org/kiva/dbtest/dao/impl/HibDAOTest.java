@@ -31,12 +31,12 @@ public class HibDAOTest {
 		hibRoleDAO.init();
 		
 		Iterator<?> it = hibDAO.getAll().iterator();
-		System.out.println("===Existing users:===");
+		LOG.info("===Existing users:===");
 		while(it.hasNext())
 		{
-			System.out.println();
-			System.out.println(it.next());
-			System.out.println();
+			LOG.info("");
+			LOG.info(it.next());
+			LOG.info("");
 		}
 		
 //		test1();

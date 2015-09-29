@@ -24,7 +24,7 @@ public class HibernateDAO extends AbstractHibernateDAO implements UserDAO {
 		{
 			session.save(user);
 		}
-		User loadedUser = session.get(User.class, user.getUserName());
+		User loadedUser = (User) session.get(User.class, user.getUserName());
 		transaction.commit();
 		return loadedUser;
 	}
@@ -44,7 +44,7 @@ public class HibernateDAO extends AbstractHibernateDAO implements UserDAO {
 	{
 		Session session = getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		User loadedUser = session.get(User.class, userName);
+		User loadedUser = (User) session.get(User.class, userName);
 		transaction.commit();
 		return loadedUser;
 	}

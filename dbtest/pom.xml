@@ -51,9 +51,9 @@
 			<version>4.16.6.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>3.0.3</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.ogm</groupId>
@@ -64,17 +64,6 @@
 			<groupId>org.hibernate.ogm</groupId>
 			<artifactId>hibernate-ogm-redis</artifactId>
 			<version>5.0.0.Alpha1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>de.flapdoodle.embed</groupId>
-			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<version>1.50.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
