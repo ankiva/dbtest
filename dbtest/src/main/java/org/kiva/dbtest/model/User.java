@@ -1,11 +1,17 @@
 package org.kiva.dbtest.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.search.annotations.Indexed;
 
 @Entity
+@Indexed
 public class User {
 	@Id
 	private String userName;
@@ -17,6 +23,12 @@ public class User {
 	private Date birthDate;
 	private Date created;
 	private Boolean smart;
+	
+	@ManyToOne
+	private Company company;
+	
+	@ManyToMany
+	private List<Role> roles;
 	
 	public String getUserName() {
 		return userName;
@@ -66,6 +78,18 @@ public class User {
 	public void setSmart(Boolean smart) {
 		this.smart = smart;
 	}
+	public Company getCompany() {
+		return company;
+	}
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -76,53 +100,86 @@ public class User {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		User other = (User) obj;
 		if (age == null) {
-			if (other.age != null)
+			if (other.age != null) {
 				return false;
-		} else if (!age.equals(other.age))
+			}
+		} else if (!age.equals(other.age)) {
 			return false;
+		}
 		if (birthDate == null) {
-			if (other.birthDate != null)
+			if (other.birthDate != null) {
 				return false;
-		} else if (!birthDate.equals(other.birthDate))
+			}
+		} else if (!birthDate.equals(other.birthDate)) {
 			return false;
+		}
+		if (company == null) {
+			if (other.company != null) {
+				return false;
+			}
+		} else if (!company.equals(other.company)) {
+			return false;
+		}
 		if (created == null) {
-			if (other.created != null)
+			if (other.created != null) {
 				return false;
-		} else if (!created.equals(other.created))
+			}
+		} else if (!created.equals(other.created)) {
 			return false;
+		}
 		if (firstName == null) {
-			if (other.firstName != null)
+			if (other.firstName != null) {
 				return false;
-		} else if (!firstName.equals(other.firstName))
+			}
+		} else if (!firstName.equals(other.firstName)) {
 			return false;
+		}
 		if (lastName == null) {
-			if (other.lastName != null)
+			if (other.lastName != null) {
 				return false;
-		} else if (!lastName.equals(other.lastName))
+			}
+		} else if (!lastName.equals(other.lastName)) {
 			return false;
+		}
+		if (roles == null) {
+			if (other.roles != null) {
+				return false;
+			}
+		} else if (!roles.equals(other.roles)) {
+			return false;
+		}
 		if (sex == null) {
-			if (other.sex != null)
+			if (other.sex != null) {
 				return false;
-		} else if (!sex.equals(other.sex))
+			}
+		} else if (!sex.equals(other.sex)) {
 			return false;
+		}
 		if (smart == null) {
-			if (other.smart != null)
+			if (other.smart != null) {
 				return false;
-		} else if (!smart.equals(other.smart))
+			}
+		} else if (!smart.equals(other.smart)) {
 			return false;
+		}
 		if (userName == null) {
-			if (other.userName != null)
+			if (other.userName != null) {
 				return false;
-		} else if (!userName.equals(other.userName))
+			}
+		} else if (!userName.equals(other.userName)) {
 			return false;
+		}
 		return true;
 	}
 	@Override

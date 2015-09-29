@@ -3,57 +3,56 @@ package org.kiva.dbtest.dao.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.kiva.dbtest.DbType;
-import org.kiva.dbtest.dao.UserDAO;
-import org.kiva.dbtest.model.User;
+import org.kiva.dbtest.dao.CompanyDAO;
+import org.kiva.dbtest.model.Company;
 
-public class HibernateDAO extends AbstractHibernateDAO implements UserDAO {
+public class HibernateCompanyDao extends AbstractHibernateDAO implements CompanyDAO {
 
-	public HibernateDAO(DbType dbType) {
+	public HibernateCompanyDao(DbType dbType) {
 		super(dbType);
 	}
-	
-	public User create(User user)
+
+	public Company create(Company company)
 	{
 		Session session = getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		if(!session.contains(user))
+		if(!session.contains(company))
 		{
-			session.save(user);
+			session.save(company);
 		}
-		User loadedUser = session.get(User.class, user.getUserName());
+		Company loadedCompany = session.get(Company.class, company.getName());
 		transaction.commit();
-		return loadedUser;
+		return loadedCompany;
 	}
 	
-	public void delete(User user)
+	public void delete(Company company)
 	{
 		Session session = getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		if(!session.contains(user))
+		if(!session.contains(company))
 		{
-			session.delete(user);
+			session.delete(company);
 		}
 		transaction.commit();
 	}
 	
-	public User read(String userName)
+	public Company read(String name)
 	{
 		Session session = getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		User loadedUser = session.get(User.class, userName);
+		Company loadedCompany = session.get(Company.class, name);
 		transaction.commit();
-		return loadedUser;
+		return loadedCompany;
 	}
 	
-	public void update(User user)
+	public void update(Company compay)
 	{
 		Session session = getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		session.saveOrUpdate(user);
+		session.saveOrUpdate(compay);
 		transaction.commit();
 	}
 
@@ -65,7 +64,7 @@ public class HibernateDAO extends AbstractHibernateDAO implements UserDAO {
 		Transaction transaction = session.beginTransaction();
 		while(it.hasNext())
 		{
-			delete((User)it.next());
+			delete((Company)it.next());
 		}
 		transaction.commit();
 	}
@@ -78,4 +77,5 @@ public class HibernateDAO extends AbstractHibernateDAO implements UserDAO {
 		trans.commit();
 		return users;
 	}
+
 }

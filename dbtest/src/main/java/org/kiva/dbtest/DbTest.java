@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.kiva.dbtest.dao.UserDAO;
+import org.kiva.dbtest.model.Company;
+import org.kiva.dbtest.model.Role;
 import org.kiva.dbtest.model.User;
 
 public class DbTest {
@@ -79,7 +81,7 @@ public class DbTest {
 	public static User createUser(String username) {
 		User user = new User();
 		user.setUserName(username);
-		user.setFirstName("Aus");
+		user.setFirstName("Au,\"s");
 		user.setLastName("Vitali");
 		user.setBirthDate(new Date());
 		user.setAge(41);
@@ -97,5 +99,19 @@ public class DbTest {
 		user.setCreated(new Date());
 		user.setSex('F');
 		user.setSmart(false);
+	}
+	
+	public static Company createCompany(String name){
+		Company comp = new Company();
+		comp.setName(name);
+		comp.setAddress("Põlla 7");
+		return comp;
+	}
+	
+	public static Role createRole(String type){
+		Role role = new Role();
+		role.setType(type);
+		role.setPrivileges("ae,uy");
+		return role;
 	}
 }
