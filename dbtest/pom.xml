@@ -60,5 +60,10 @@
 			<artifactId>hibernate-ogm-mongodb</artifactId>
 			<version>5.0.0.Alpha1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate.ogm</groupId>
+			<artifactId>hibernate-ogm-redis</artifactId>
+			<version>5.0.0.Alpha1</version>
+		</dependency>
 	</dependencies>  
 </project>
