@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 
 public class Utils {
 	
@@ -12,7 +13,10 @@ public class Utils {
 			"yyyy-MM-dd HH:mm:ss");
 
 	public static void confLogger(){
-		BasicConfigurator.configure();
+//		PropertyConfigurator.
+//		BasicConfigurator.configure();
+//		System.setProperty("log4j.rootLogger.level", "INFO");
+//		System.setProperty("log4j.org.kiva.level", "DEBUG");
 	}
 	
 	public static Date parse(String date){
