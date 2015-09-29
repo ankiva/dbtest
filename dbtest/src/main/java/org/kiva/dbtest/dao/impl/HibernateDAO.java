@@ -71,7 +71,7 @@ public class HibernateDAO implements UserDAO {
 		{
 			session.save(user);
 		}
-		User loadedUser = session.get(User.class, user.getUserName());
+		User loadedUser = (User) session.get(User.class, user.getUserName());
 		transaction.commit();
 		return loadedUser;
 	}
@@ -91,7 +91,7 @@ public class HibernateDAO implements UserDAO {
 	{
 		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		User loadedUser = session.get(User.class, userName);
+		User loadedUser = (User) session.get(User.class, userName);
 		transaction.commit();
 		return loadedUser;
 	}
