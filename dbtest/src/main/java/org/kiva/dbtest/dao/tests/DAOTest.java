@@ -1,6 +1,8 @@
 package org.kiva.dbtest.dao.tests;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.kiva.dbtest.DbType;
@@ -44,11 +46,16 @@ public class DAOTest {
 		test.test3();
 		test.clean();
 		
+		test.test4();
+		test.clean();
+		
 		env.getUserDAO().destroy();
 	}
 	
 	public void test1() {
 
+		LOG.info("test1");
+		
 		userDAO = env.getUserDAO();
 
 		testIter("user", 1);
@@ -57,6 +64,9 @@ public class DAOTest {
 	}
 	
 	public void test2(){
+		
+		LOG.info("test2");
+		
 		userDAO = env.getUserDAO();
 
 		testIter("user", 2);
@@ -65,9 +75,32 @@ public class DAOTest {
 	}
 	
 	public void test3(){
+		
+		LOG.info("test3");
+		
 		userDAO = env.getUserDAO();
 
 		testIter("user", numOfIters);
+		
+		statHolder.logStats();
+	}
+	
+	public void test4(){
+		
+		LOG.info("test1");
+		
+		List<User> users = new ArrayList<User>( 2 * numOfIters );
+		String prefix = "Iteruser_";
+		for(int i = 0; i < numOfIters; i++){
+			users.add(createUser(prefix + i));
+		}
+		testCreateIter(users);
+		testReadIter(users);
+		for(User u : users){
+			u.setFirstName("ubunt");
+		}
+		testUpdateIter(users);
+		testDeleteIter(users);
 		
 		statHolder.logStats();
 	}
@@ -133,6 +166,38 @@ public class DAOTest {
 		userDAO.delete(u);
 		
 		statHolder.addDelete(new Stat(System.currentTimeMillis()-start));
+	}
+	
+	private void testCreateIter(List<User> users){
+		long t = System.currentTimeMillis();
+		for(User u : users){
+			create(u);
+		}
+		statHolder.addCreate(new Stat(System.currentTimeMillis() - t, users.size()));
+	}
+	
+	private void testReadIter(List<User> users){
+		long t = System.currentTimeMillis();
+		for(User u : users){
+			read(u.getUserName());
+		}
+		statHolder.addRead(new Stat(System.currentTimeMillis() - t, users.size()));
+	}
+	
+	private void testUpdateIter(List<User> users){
+		long t = System.currentTimeMillis();
+		for(User u : users){
+			update(u);
+		}
+		statHolder.addUpdate(new Stat(System.currentTimeMillis() - t, users.size()));
+	}
+	
+	private void testDeleteIter(List<User> users){
+		long t = System.currentTimeMillis();
+		for(User u : users){
+			delete(u);
+		}
+		statHolder.addDelete(new Stat(System.currentTimeMillis() - t, users.size()));
 	}
 	
 	public void clean(){
