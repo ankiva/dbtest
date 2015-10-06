@@ -14,14 +14,14 @@ import org.kiva.dbtest.model.User;
 public class HibDAOTest {
 	private static final Logger LOG = Logger.getLogger(DbTest.class);
 	
-	private static HibernateDAO hibDAO;
+	private static HibernateUserDao hibDAO;
 	private static HibernateCompanyDao hibCompanyDAO;//AbstractHibDAO instead?
 	private static HibernateRoleDao hibRoleDAO;
 	
 	public static void main(String[] args) {
 		Utils.confLogger();
 		
-		hibDAO = new HibernateDAO(DbType.parse(args[0]));
+		hibDAO = new HibernateUserDao(DbType.parse(args[0]));
 		hibDAO.init();
 		
 		hibCompanyDAO = new HibernateCompanyDao(DbType.parse(args[0]));

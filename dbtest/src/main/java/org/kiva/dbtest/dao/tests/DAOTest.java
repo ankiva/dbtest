@@ -15,6 +15,7 @@ public class DAOTest {
 	
 	private UserDAO userDAO;
 	private StatHolder statHolder = new StatHolder();
+	private static int numOfIters = 1000;
 	
 	private static final Logger LOG = Logger.getLogger(DAOTest.class);
 	
@@ -37,17 +38,15 @@ public class DAOTest {
 		
 		test.test3();
 		test.clean();
+		
+		env.getUserDAO().destroy();
 	}
 	
 	public void test1() {
 
 		userDAO = env.getUserDAO();
 
-		try {
-			testIter("user", 1);
-		} finally {
-			userDAO.destroy();
-		}
+		testIter("user", 1);
 		
 		statHolder.logStats();
 	}
@@ -55,11 +54,7 @@ public class DAOTest {
 	public void test2(){
 		userDAO = env.getUserDAO();
 
-		try {
-			testIter("user", 2);
-		} finally {
-			userDAO.destroy();
-		}
+		testIter("user", 2);
 		
 		statHolder.logStats();
 	}
@@ -67,11 +62,7 @@ public class DAOTest {
 	public void test3(){
 		userDAO = env.getUserDAO();
 
-		try {
-			testIter("user", 1000);
-		} finally {
-			userDAO.destroy();
-		}
+		testIter("user", numOfIters);
 		
 		statHolder.logStats();
 	}

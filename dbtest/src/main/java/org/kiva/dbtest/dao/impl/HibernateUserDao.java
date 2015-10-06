@@ -9,9 +9,9 @@ import org.kiva.dbtest.DbType;
 import org.kiva.dbtest.dao.UserDAO;
 import org.kiva.dbtest.model.User;
 
-public class HibernateDAO extends AbstractHibernateDAO implements UserDAO {
+public class HibernateUserDao extends AbstractHibernateDAO implements UserDAO {
 
-	public HibernateDAO(DbType dbType) {
+	public HibernateUserDao(DbType dbType) {
 		super(dbType);
 	}
 	
