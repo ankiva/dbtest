@@ -23,8 +23,13 @@ public class DAOTest {
 		Utils.confLogger();
 		
 		DbType dbType = DbType.parse(args[0]);
+		DbType dbSubType = null;
+		if(args.length > 1){
+			dbSubType = DbType.parse(args[1]);
+		}
+		
 		env = new Environment();
-		env.init(dbType);
+		env.init(dbType, dbSubType);
 		
 		DAOTest test = new DAOTest();
 		

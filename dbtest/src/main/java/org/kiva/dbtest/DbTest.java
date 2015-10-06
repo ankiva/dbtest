@@ -19,7 +19,7 @@ public class DbTest {
 		LOG.info("start");
 		DbType dbType = DbType.parse(args[0]);
 		env = new Environment();
-		env.init(dbType);
+		env.init(dbType, null);
 
 //		env.getUserDAO().deleteAll();
 		test1();

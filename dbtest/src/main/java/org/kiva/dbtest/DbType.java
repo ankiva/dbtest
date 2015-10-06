@@ -3,7 +3,8 @@ package org.kiva.dbtest;
 public enum DbType {
 	CASSANDRA,
 	MONGODB,
-	REDIS
+	REDIS,
+	HIBERNATE,
 	;
 	
 	public static DbType parse(String dbType){
