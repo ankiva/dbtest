@@ -73,7 +73,7 @@ public class HibernateCompanyDao extends AbstractHibernateDAO implements Company
 	{
 		Session session = getSessionFactory().getCurrentSession();
 		Transaction trans = session.beginTransaction();
-		List<?> users = session.createQuery("SELECT u FROM User u").list();
+		List<?> users = session.createQuery("SELECT u FROM Company c").list();
 		trans.commit();
 		return users;
 	}

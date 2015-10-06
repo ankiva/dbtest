@@ -15,7 +15,7 @@ public class HibDAOTest {
 	private static final Logger LOG = Logger.getLogger(DbTest.class);
 	
 	private static HibernateDAO hibDAO;
-	private static HibernateCompanyDao hibCompanyDAO;
+	private static HibernateCompanyDao hibCompanyDAO;//AbstractHibDAO instead?
 	private static HibernateRoleDao hibRoleDAO;
 	
 	public static void main(String[] args) {

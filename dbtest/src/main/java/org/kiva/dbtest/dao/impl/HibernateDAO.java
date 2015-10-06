@@ -3,7 +3,6 @@ package org.kiva.dbtest.dao.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.kiva.dbtest.DbType;
