@@ -11,46 +11,89 @@ import org.kiva.dbtest.model.User;
 
 public class DAOTest {
 
-	private static int numOfRecords = 1000;
 	private static Environment env;
-	private static UserDAO userDAO;
+	
+	private UserDAO userDAO;
+	private StatHolder statHolder = new StatHolder();
 	
 	private static final Logger LOG = Logger.getLogger(DAOTest.class);
 	
 	public static void main(String[] args) {
+		Utils.confLogger();
+		
 		DbType dbType = DbType.parse(args[0]);
 		env = new Environment();
 		env.init(dbType);
 		
+		DAOTest test = new DAOTest();
+		
+		test.clean();
+		
+		test.test1();
+		test.clean();
+		
+		test.test2();
+		test.clean();
+		
+		test.test3();
+		test.clean();
+	}
+	
+	public void test1() {
+
 		userDAO = env.getUserDAO();
+
+		try {
+			testIter("user", 1);
+		} finally {
+			userDAO.destroy();
+		}
 		
-		Utils.confLogger();
+		statHolder.logStats();
+	}
+	
+	public void test2(){
+		userDAO = env.getUserDAO();
+
+		try {
+			testIter("user", 2);
+		} finally {
+			userDAO.destroy();
+		}
 		
-		DAOTest dTest = new DAOTest();
+		statHolder.logStats();
+	}
+	
+	public void test3(){
+		userDAO = env.getUserDAO();
+
+		try {
+			testIter("user", 1000);
+		} finally {
+			userDAO.destroy();
+		}
 		
-		long c = dTest.create();
-		long r = dTest.read();
-		long u = dTest.update();
-		long d = dTest.delete();
-		
-		LOG.info("Creation took "+c+" milliSec");
-		LOG.info("Read took "+r+" milliSec");
-		LOG.info("Update took "+u+" milliSec");
-		LOG.info("Delete took "+d+" milliSec");
-		LOG.info("Total time "+(c+r+u+d)+" milliSec");
-		
-		userDAO.destroy();
+		statHolder.logStats();
+	}
+	
+	private void testIter(String prefix, int iterations){
+		for(int i = 0; i < iterations; i++){
+			long t = System.currentTimeMillis();
+			String username = prefix + "_ " + i;
+			User u = createUser(username);
+			create(u);
+			u = read(username);
+			u.setLastName("Foo");
+			update(u);
+			delete(u);
+			statHolder.addIter(new Stat(System.currentTimeMillis() - t));
+		}
 	}
 
-	public long create()
+	public User createUser(String username)
 	{
 		User u = new User();
-		
-		long start = System.currentTimeMillis();
-		
-		for(int i=0; i<numOfRecords; i++)
-		{
-			u.setUserName(String.valueOf(i));
+			u.setUserName(username);
 			u.setFirstName("Joe");
 			u.setLastName("Doe");
 			u.setAge(40);
@@ -58,51 +101,47 @@ public class DAOTest {
 			u.setBirthDate(new Date());
 			u.setCreated(new Date());
 			u.setSmart(true);
-			
-			userDAO.create(u);
-		}
 		
-		return (System.currentTimeMillis()-start);
+		return u;
 	}
 	
-	public long read()
+	public void create(User user){
+		long t = System.currentTimeMillis();
+		userDAO.create(user);
+		statHolder.addCreate(new Stat(System.currentTimeMillis() - t));
+	}
+	
+	public User read(String username)
 	{
 		long start = System.currentTimeMillis();
 		
-		for(int i=0; i<numOfRecords; i++)
-		{
-			userDAO.read(String.valueOf(i));
-		}
+		User u = userDAO.read(username);
 		
-		return (System.currentTimeMillis()-start);
+		statHolder.addRead(new Stat(System.currentTimeMillis() - start));
+		return u;
 	}
 	
-	public long update()
+	public void update(User u)
 	{
 		long start = System.currentTimeMillis();
 		
-		for(int i=0; i<numOfRecords; i++)
-		{
-			User u = userDAO.read(String.valueOf(i));
-			u.setLastName("Foo");
-			userDAO.update(u);
-			//LOG.info(u.getUserName());
-		}
+		userDAO.update(u);
 		
-		return (System.currentTimeMillis()-start);
+		statHolder.addUpdate(new Stat(System.currentTimeMillis()-start));
 	}
 	
-	public long delete()
+	public void delete(User u)
 	{
 		long start = System.currentTimeMillis();
 		
-		for(int i=0; i<numOfRecords; i++)
-		{
-			User u = userDAO.read(String.valueOf(i));
-			userDAO.delete(u);
-			//LOG.info(u.getUserName());
-		}
+		userDAO.delete(u);
 		
-		return (System.currentTimeMillis()-start);
+		statHolder.addDelete(new Stat(System.currentTimeMillis()-start));
+	}
+	
+	public void clean(){
+		UserDAO uDao = env.getUserDAO();
+		uDao.deleteAll();
+		statHolder.reset();
 	}
 }
